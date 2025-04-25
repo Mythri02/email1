@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 15px;
+        width: 300px;
+      }
+      button {
+        padding: 10px;
+        font-size: 14px;
+      }
+      #result {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Phishing Detection</h2>
+    <p>Please select an email to analyze.</p>
+    <button id="analyzeBtn">Analyze Email</button>
+    <div id="result"></div>
+
+    <script>
+      // When the "Analyze Email" button is clicked
+      document.getElementById('analyzeBtn').addEventListener('click', () => {
+        // Query the active tab
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          // Send a message to the content script in the active tab
+          chrome.tabs.sendMessage(tabs[0].id, { action: "getEmailContent" }, function (response) {
+            if (response && response.emailText) {
+              analyzeEmail(response.emailText);
+            } else {
+              document.getElementById('result').innerText = "No email content found! Please try again.";
+            }
+          });
+        });
+      });
+
+      // Function to send the email text to the Flask backend
+      async function analyzeEmail(emailText) {
+        try {
+          const response = await fetch('http://127.0.0.1:5000/predict', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: emailText })
+          });
+          const data = await response.json();
+          document.getElementById('result').innerText = 'Prediction: ' + data.prediction;
+        } catch (error) {
+          document.getElementById('result').innerText = 'Error occurred: ' + error;
+        }
+      }
+    </script>
+  </body>
+</html>
