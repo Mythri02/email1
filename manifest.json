@@ -3,7 +3,8 @@
   "name": "Phishing Email Detection",
   "version": "1.0",
   "description": "Detects phishing emails in your inbox using NLP.",
-  "permissions": ["activeTab", "notifications", "storage"],
+  "permissions": ["activeTab"],
+  "host_permissions": ["https://mail.google.com/*", "https://outlook.live.com/*"],
   "background": {
     "service_worker": "background.js"
   },
@@ -21,5 +22,11 @@
     "16": "assets/icon16.png",
     "48": "assets/icon48.png",
     "128": "assets/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": {
+      "script-src": "'self'",
+      "object-src": "'self'"
+    }
   }
 }
