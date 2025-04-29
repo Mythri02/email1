@@ -4,7 +4,7 @@ aiohttp==3.11.18
 aiosignal==1.3.2
 astunparse==1.6.3
 attrs==25.3.0
-beautifulsoup==4.12.2
+beautifulsoup==3.2.2
 blinker==1.9.0
 certifi==2025.1.31
 charset-normalizer==3.4.1
