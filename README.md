@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # email
 # Chrome Extension Backend for Email Integration
 
@@ -22,3 +23,6 @@ Clone the repository and install the necessary packages.
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
 pip install -r requirements.txt
+=======
+# email1
+>>>>>>> 096f788fc3ab0121679aa44fc36e7cbac4668230
